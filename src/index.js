@@ -10,8 +10,9 @@ app.listen(3125,async()=>{
     await connect();
     console.log('Mongodb connected');
 
-    const response = await service.create({
-        content: "Done with #refractor"
+    let ser = new service();
+    const response = await ser.create({
+        content: "Capital #FUN"
     });
     console.log(response)
 
