@@ -1,42 +1,18 @@
-const express = require('express');
-const connect = require('./config/database')
-
+import express from 'express';
+import {connect} from './config/database.js'
 const app = express();
 
-const TweetService = require('./services/tweet-service')
 
-
+import service from './services/tweet-service.js'
 
 app.listen(3125,async()=>{
     console.log('server start');
-
     await connect();
     console.log('Mongodb connected');
 
-    // const tweetrepo = new TweetRepository();
-    // const tweets = await Tweet.find({
-    //     content: ["First tweet","Second tweet"]
-    // });
-    // console.log(tweets)
-
-    let service = new TweetService();
-
-    const tweet = await service.create({
-        content: "my #working twitter"
+    const response = await service.create({
+        content: "Done with #refractor"
     });
-    
-    console.log(tweet)
-    // const tweet = await tweetrepo.create({content : 'With hooks now on'});
-    // const tweet = await tweetrepo.create({content : 'my tweet'});
-    // console.log(tweet);
-    // const comment = await Comment.create({content: 'new comment'});
-    // tweet.comments.push(comment);
-    // await tweet.save();
-    // console.log(tweet);
-    
+    console.log(response)
 
-
-    // const tweet = await tweetrepo.getAll(0, 4);
-
-    // console.log(tweet[0].contentWithEmail);
 })

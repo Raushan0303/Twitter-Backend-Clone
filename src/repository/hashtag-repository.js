@@ -1,9 +1,9 @@
-const Hastag = require('../models/hashtags');
+import Hashtag from '../models/hashtags.js'
 
 class HastagRepository{
     async create(data){
         try {
-            const tag = await Hastag.create(data);
+            const tag = await Hashtag.create(data);
             return tag;
         } catch (error) {
             console.log(error)
@@ -11,7 +11,7 @@ class HastagRepository{
     }
     async bulkCreate(data){
         try {
-            const tags = await Hastag.insertMany(data);
+            const tags = await Hashtag.insertMany(data);
             return tags
         } catch (error) {
             console.log(error)
@@ -19,7 +19,7 @@ class HastagRepository{
     }
     async get(id){
         try {
-            const tag = await Hastag.findById(id);
+            const tag = await Hashtag.findById(id);
             return tag;
         } catch (error) {
             console.log(error)
@@ -27,7 +27,7 @@ class HastagRepository{
     }
     async destroy(id){
         try {
-            const response = await Hastag.findByIdAndDelete(id);
+            const response = await Hashtag.findByIdAndDelete(id);
             return response;
         } catch (error) {
             console.log(error)
@@ -35,7 +35,7 @@ class HastagRepository{
     }
     async findByName(titleList){
         try {
-            const tags = await Hastag.find({
+            const tags = await Hashtag.find({
                 title: titleList
             });
             return tags;
@@ -47,4 +47,4 @@ class HastagRepository{
 // if we want to select only one thing in that object just bind that await function 
 // into .select('title')
 //if we want to deslect the id then simply right like this .select('title -_id')
-module.exports = HastagRepository;
+export default HashtagRepository;

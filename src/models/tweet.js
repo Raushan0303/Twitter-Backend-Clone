@@ -1,4 +1,4 @@
-const mongoose  = require("mongoose")
+import mongoose from "mongoose";
 
 const tweetSchema = new mongoose.Schema({
     content :{
@@ -17,17 +17,24 @@ const tweetSchema = new mongoose.Schema({
     ]
 }, {timestamps: true});
 
-tweetSchema.virtual('contentWithEmail').get(function process(){
-    return `${this.content} \ncreated by:${this.userEmail}`
-})
+
+const Tweet =  mongoose.model('Tweet',tweetSchema);
+
+export default Tweet;
+
+
+
+
+
+
+
+
+// tweetSchema.virtual('contentWithEmail').get(function process(){
+//     return `${this.content} \ncreated by:${this.userEmail}`
+// })
 
 // tweetSchema.pre('save',function(next){
 //     console.log('Inside a hook');
 //     this.content = this.content + '....'
 //     next();
 // })
-
-
-const Tweet =  mongoose.model('Tweet',tweetSchema);
-
-module.exports = Tweet;
