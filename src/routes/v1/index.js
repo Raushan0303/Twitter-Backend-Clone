@@ -1,0 +1,9 @@
+import express, { Router } from 'express';
+
+import { createTweet } from '../../controllers/tweet-controller.js'
+
+const router = express.Router();
+
+router.post('/tweets',createTweet);
+
+export default Router;
