@@ -1,4 +1,4 @@
-import {LikeRepository, TweetRepository} from "../repository/index"
+import {LikeRepository, TweetRepository} from "../repository/index.js"
 
 class LikeService {
     constructor(){
@@ -8,7 +8,8 @@ class LikeService {
 
     async toggleLike(modelId,modelType,userId){ //api/v1/likes/toggle?id=model&type=model 
         if(modelType=='Tweet'){
-            var likable = await this.tweetRepository.getAll(modelId).populate('likes');
+            var likable = await this.tweetRepository.find(modelId)
+           
 
         }else if(modelType == 'Comment'){
             //todo when we implement comment model
@@ -20,24 +21,26 @@ class LikeService {
             onModel: modelType,
             likable: modelId
         });
-        if(exists){
-            likable.likes.pull('exists');
+        console.log("exists", exists);
+        if(exists) {
+            likable.likes.pull(exists.id);
             await likable.save();
-            await exists.remove();
+            await this.likeRepository.destroy(exists._id); 
             var isAdded = false;
-        }else{
+
+        } else {
             const newLike = await this.likeRepository.create({
                 user: userId,
                 onModel: modelType,
-                likable:modelId
+                likable: modelId
             });
             likable.likes.push(newLike);
             await likable.save();
+
             var isAdded = true;
         }
-        return isAdded
-    }
-
+        return isAdded;
+    }   
 }
 
 export default LikeService;
