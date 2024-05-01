@@ -1,7 +1,10 @@
 import Tweet from '../models/tweet.js'
+import CrudRepository from './crud-repository';
 
-
-class TweetRepository{
+class TweetRepository extends CrudRepository{
+    constructor(){
+        super(Tweet)
+    }
 
     async create(data){
         try {
@@ -11,27 +14,20 @@ class TweetRepository{
             console.log(error);
         }
     }
-    async get(id){
+    
+    async getWithComments(id) {
         try {
-            const tweet = await Tweet.findById(id);
+            const tweet = await Tweet.findById(id).populate({
+                path: 'comments',
+                populate: {
+                    path: 'comments'
+                }
+            }).lean();     //the lean function returned the normal js object not return the mongoose object altogether
             return tweet;
         } catch (error) {
             console.log(error);
         }
     }
-    // async getWithComments(id) {
-    //     try {
-    //         const tweet = await Tweet.findById(id).populate({
-    //             path: 'comments',
-    //             populate: {
-    //                 path: 'comments'
-    //             }
-    //         }).lean();     //the lean function returned the normal js object not return the mongoose object altogether
-    //         return tweet;
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
     async getAll(offset, limit) {
         try {
             const tweet = await Tweet.find().skip(offset).limit(limit);
