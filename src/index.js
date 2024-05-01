@@ -2,21 +2,23 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {connect} from './config/database.js'
 import apiRoutes from './routes/index.js'
+import TweetService from './services/tweet-service.js';
 
 const app = express();
 
-app.use('/api',apiRoutes)
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
+app.use('/api',apiRoutes)
 
 app.listen(3125,async()=>{
     console.log('server start');
     await connect();
     console.log('Mongodb connected');
 
-    // let ser = new service();
+    // let ser = new TweetService();
     // const response = await ser.create({
-    //     content: "Capital #FUN"
+    //     content: "Capital #FUN run me maja aaya kuchh bhi likh deta hu #hahah"
     // });
     // console.log(response)
 
