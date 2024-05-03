@@ -2,9 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {connect} from './config/database.js'
 import apiRoutes from './routes/index.js'
-import UserRepository from './repository/user-repository.js';
-import LikeService from './services/like-service.js';
-import TweetRepository from './repository/tweet-repository.js';
+import passport from 'passport';
+import { passportAuth } from './config/jwt-middleware.js';
+// import UserRepository from './repository/user-repository.js';
+// import LikeService from './services/like-service.js';
+// import TweetRepository from './repository/tweet-repository.js';
 
 const app = express();
 
@@ -12,6 +14,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use('/api',apiRoutes)
+
+app.use(passport.initialize());
+passportAuth(passport);
 
 app.listen(3125,async()=>{
     console.log('server start');
