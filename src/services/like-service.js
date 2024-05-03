@@ -1,18 +1,18 @@
-import {LikeRepository, TweetRepository} from "../repository/index.js"
+import {LikeRepository, TweetRepository, CommentRepository} from "../repository/index.js"
 
 class LikeService {
     constructor(){
         this.likeRepository = new LikeRepository();
         this.tweetRepository = new TweetRepository();
+        this.commentRepository = new CommentRepository();
     }
 
     async toggleLike(modelId,modelType,userId){ //api/v1/likes/toggle?id=model&type=model 
         if(modelType=='Tweet'){
             var likable = await this.tweetRepository.find(modelId)
-           
-
         }else if(modelType == 'Comment'){
             //todo when we implement comment model
+            var likable = await this.commentRepository.get(modelId)
         }else{
             throw new Error('unknown model type')
         }
